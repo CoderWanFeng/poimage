@@ -129,12 +129,13 @@ class MainImage():
         print('*' * 20 + "{}".format('动漫头像名称：result.jpg') + '*' * 20)
         print('*' * 20 + "{}".format('您的动漫头像转换完毕，请在本代码运行的文档里查看') + '*' * 20)
 
-    def down4img(self, url, output_name, type):
+    def down4img(self, url, output_path, output_name, type):
         """
         下载指定url的一张图片，支持所有格式:jpg\png\gif .etc
         """
         response = requests.get(url, stream=True)
-        with open('.'.join((output_name, type)), 'wb') as output_img:
+        output_path_name = os.path.join(output_path, '.'.join((output_name, type)))
+        with open(output_path_name, 'wb') as output_img:
             for chunk in response:
                 output_img.write(chunk)
             output_img.close()

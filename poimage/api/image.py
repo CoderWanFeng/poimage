@@ -27,8 +27,8 @@ def img2Cartoon(path, client_api='OVALewIvPyLmiNITnceIhrYf', client_secret='rpBQ
     mainImage.img2Cartoon(path, client_api, client_secret)
 
 
-def down4img(url, output_name='down4img', type='jpg'):
-    mainImage.down4img(url, output_name, type)
+def down4img(url, output_path='.', output_name='down4img', type='jpg'):
+    mainImage.down4img(url, output_path, output_name, type)
 
 
 def txt2wordcloud(filename, color="white", result_file="your_wordcloud.png"):
