@@ -1,4 +1,6 @@
 import os
+
+import cv2
 # from lib.image import add_watermark_service
 # 生成词云需要使用的类库
 from PIL import Image
@@ -140,3 +142,31 @@ class MainImage():
                 output_img.write(chunk)
             output_img.close()
             print(f"下载成功，图片名称：{'.'.join((output_name, type))}")
+
+    def pencil4img(self, input_img, output_path, output_name):
+        """
+        :param input_img: 需要转换的图片，带路径
+        :param output_path: 输出路径
+        :param output_name: 输出图片的名称，带格式
+        :return:
+        """
+        img = cv2.imread(input_img)
+
+        ## Image to Gray Image
+        gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+        ## Gray Image to Inverted Gray Image
+        inverted_gray_image = 255 - gray_image
+
+        ## Blurring The Inverted Gray Image
+        blurred_inverted_gray_image = cv2.GaussianBlur(inverted_gray_image, (19, 19), 0)
+
+        ## Inverting the blurred image
+        inverted_blurred_image = 255 - blurred_inverted_gray_image
+
+        ### Preparing Photo sketching
+        sketck = cv2.divide(gray_image, inverted_blurred_image, scale=256.0)
+
+        cv2.imwrite(os.path.join(output_path, output_name), sketck)
+
+
