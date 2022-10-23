@@ -8,11 +8,11 @@ class TestImage(unittest.TestCase):
         txt2wordcloud(filename=r'./test.txt')
 
     def test_add_watermark(self):
-        add_watermark(file='./test_files/images/0816.jpg', mark='python-office')
+        add_watermark(file='group.jpg', mark='python-office',output_path=r'./output_path')
 
     def test_down4img(self):
         down4img(url='https://www.python-office.com/api/img-cdn/python-office/find_excel_data/group.jpg',
-                 output_path=r'D:\download\xunlei')
+                 output_path=r'./')
 
     # def test_img2Cartoon(self):
     #     img2Cartoon()

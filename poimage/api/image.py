@@ -18,8 +18,9 @@ def image2gif():
 
 
 # todo：输出文件路径
-def add_watermark(file, mark, out="output", color="#8B8B1B", size=30, opacity=0.15, space=75, angle=30):
-    mainImage.add_watermark(file, mark, out, color, size, opacity, space, angle)
+def add_watermark(file, mark, output_path='./', out='mark_img', color="#8B8B1B", size=30, opacity=0.15, space=75,
+                  angle=30):
+    mainImage.add_watermark(file, mark, output_path, out, color, size, opacity, space, angle)
 
 
 # todo：输入文件路径

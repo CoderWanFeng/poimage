@@ -1,4 +1,3 @@
-
 """
 图片添加水印，参考：
 """
@@ -73,7 +72,7 @@ def im_add_mark(im, text, color="#8B8B1B", size=30, opacity=0.15, space=75, angl
     return im
 
 
-def add_mark2file(imageFile, text, out="output", color="#8B8B1B", size=30, opacity=0.15, space=75, angle=30):
+def add_mark2file(imageFile, text, out, color, size, opacity, space, angle):
     '''
     添加水印，然后保存图片
     '''
@@ -83,7 +82,7 @@ def add_mark2file(imageFile, text, out="output", color="#8B8B1B", size=30, opaci
         im = Image.open(imageFile)
         image = im_add_mark(im, text, color, size, opacity, space, angle)
         if not os.path.exists(out):
-            os.mkdir(out)
+            os.makedirs(out)
         if os.path.splitext(new_name)[1] != '.png':
             image = image.convert('RGB')
         image.save(new_name)

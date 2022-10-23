@@ -13,6 +13,7 @@ from wordcloud import WordCloud
 import jieba
 
 from poimage.lib.image import add_watermark_service
+from pathlib import Path
 
 
 class MainImage():
@@ -50,12 +51,14 @@ class MainImage():
             wc.generate(cloud_text)
             wc.to_file(result_file)
 
-    def add_watermark(self, file, mark, out="output", color="#8B8B1B", size=30, opacity=0.15, space=75, angle=30):
+    def add_watermark(self, file, mark, output_path, out, color="#8B8B1B", size=30, opacity=0.15, space=75,
+                      angle=30):
         """
         @Author & Date  : demo 2022/5/6 14:33
         @Desc  : 给图片添加水印
         @Return  ： 添加了水印的图片，输出到out指定的文件夹
         """
+        out = Path(output_path) / out  # 拼接输出文件和文件夹，为输出路径
         if os.path.isdir(file):
             names = os.listdir(file)
             with alive_bar(len(names)) as bar:
@@ -168,5 +171,3 @@ class MainImage():
         sketck = cv2.divide(gray_image, inverted_blurred_image, scale=256.0)
 
         cv2.imwrite(os.path.join(output_path, output_name), sketck)
-
-
