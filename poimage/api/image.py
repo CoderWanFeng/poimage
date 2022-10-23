@@ -28,6 +28,13 @@ def img2Cartoon(path, client_api='OVALewIvPyLmiNITnceIhrYf', client_secret='rpBQ
 
 
 def down4img(url, output_path='.', output_name='down4img', type='jpg'):
+    """
+    :param url: 图片的下载链接，必填
+    :param output_path: 下载后存放的位置，选填，默认
+    :param output_name: 下载图片的名称，选填，默认：down4img
+    :param type:下载图片的类型，选填，默认：jpg
+    :return:
+    """
     mainImage.down4img(url, output_path, output_name, type)
 
 
