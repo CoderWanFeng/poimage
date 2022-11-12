@@ -45,3 +45,12 @@ def txt2wordcloud(filename, color="white", result_file="your_wordcloud.png"):
 
 def pencil4img(input_img, output_path='./', output_name=r'pencil4img.jpg'):
     mainImage.pencil4img(input_img, output_path, output_name)
+
+
+def decode_qrcode(qrcode_path):
+    """
+    解析二维码
+    :param qrcode_path: 二维码图片的路径
+    :return:
+    """
+    mainImage.decode_qrcode(qrcode_path)
