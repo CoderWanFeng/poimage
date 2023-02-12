@@ -20,5 +20,5 @@ class TestImage(unittest.TestCase):
     def test_pencil4img(self):
         pencil4img(input_img=r'D:\workplace\code\test\down4img\girl.jpg')
 
-    def test_decode_qrcode(self):
-        decode_qrcode(qrcode_path=r'C:\Users\Lenovo\Desktop\temp\自媒体交流群.png')
+    # def test_decode_qrcode(self):
+    #     decode_qrcode(qrcode_path=r'C:\Users\Lenovo\Desktop\temp\自媒体交流群.png')

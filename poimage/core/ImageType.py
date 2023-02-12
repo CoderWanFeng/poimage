@@ -14,7 +14,7 @@ import jieba
 
 from poimage.lib.image import add_watermark_service
 from pathlib import Path
-from pyzbar.pyzbar import decode  # 解析二维码用
+# from pyzbar.pyzbar import decode  # 解析二维码用
 
 
 class MainImage():
@@ -172,9 +172,9 @@ class MainImage():
         sketck = cv2.divide(gray_image, inverted_blurred_image, scale=256.0)
 
         cv2.imwrite(os.path.join(output_path, output_name), sketck)
-
-    def decode_qrcode(self, qrcode_path):
-        qrcode_content = decode(Image.open(qrcode_path))
-        qrcode_url = qrcode_content[0][0].decode()
-        print(qrcode_url)
-        return qrcode_url
+    #
+    # def decode_qrcode(self, qrcode_path):
+    #     qrcode_content = decode(Image.open(qrcode_path))
+    #     qrcode_url = qrcode_content[0][0].decode()
+    #     print(qrcode_url)
+    #     return qrcode_url
