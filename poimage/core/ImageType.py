@@ -1,23 +1,33 @@
+import base64
 import os
+from pathlib import Path
 
 import cv2
+import requests
 # from lib.image import add_watermark_service
 # 生成词云需要使用的类库
 from PIL import Image
-from alive_progress import alive_bar
-
-import base64
-import requests
-
-from wordcloud import WordCloud
-import jieba
+# from wordcloud import WordCloud
+from pofile import get_files, mkdir
+from poprogress import simple_progress
 
 from poimage.lib.image import add_watermark_service
-from pathlib import Path
+
+
 # from pyzbar.pyzbar import decode  # 解析二维码用
 
 
 class MainImage():
+    def compress_image(self, input_file, output_file, quality):
+        """
+        压缩图片
+        :param input_file: 输入图片
+        :param output_file: 输出图片
+        :param quality: 质量，1-100之间，数值越低压缩率越高
+        :return:
+        """
+        img = Image.open(input_file)
+        img.save(output_file, quality=quality)
 
     # TODO:自动生成gif
     def image2gif(self):
@@ -33,42 +43,38 @@ class MainImage():
         @Desc  : 生成词云的代码，可以添加更多个性化功能
         @Return  ：
         """
-        with open(filename, encoding='utf8') as fp:
-            text = fp.read()
-            # 将读取的中文文档进行分词
-            # 接收分词的字符串
-            word_list = jieba.cut(text)
-            # 分词后在单独个体之间加上空格
-            cloud_text = " ".join(word_list)
+        print("txt2wordcloud，该功能已过期")
 
-            # 生成wordcloud对象
-            wc = WordCloud(background_color=color,
-                           max_words=200,
-                           min_font_size=15,
-                           max_font_size=50,
-                           width=400,
-                           font_path="msyh.ttc",  # 默认的简体中文字体，没有会报错
-                           )
-            wc.generate(cloud_text)
-            wc.to_file(result_file)
+        # with open(filename, encoding='utf8') as fp:
+        #     text = fp.read()
+        #     # 将读取的中文文档进行分词
+        #     # 接收分词的字符串
+        #     word_list = jieba.cut(text)
+        #     # 分词后在单独个体之间加上空格
+        #     cloud_text = " ".join(word_list)
+        #
+        #     # 生成wordcloud对象
+        #     wc = WordCloud(background_color=color,
+        #                    max_words=200,
+        #                    min_font_size=15,
+        #                    max_font_size=50,
+        #                    width=400,
+        #                    font_path="msyh.ttc",  # 默认的简体中文字体，没有会报错
+        #                    )
+        #     wc.generate(cloud_text)
+        #     wc.to_file(result_file)
 
-    def add_watermark(self, file, mark, output_path, out, color="#8B8B1B", size=30, opacity=0.15, space=75,
+    def add_watermark(self, file, mark, output_path, color="#8B8B1B", size=30, opacity=0.15, space=75,
                       angle=30):
         """
         @Author & Date  : demo 2022/5/6 14:33
         @Desc  : 给图片添加水印
         @Return  ： 添加了水印的图片，输出到out指定的文件夹
         """
-        out = Path(output_path) / out  # 拼接输出文件和文件夹，为输出路径
-        if os.path.isdir(file):
-            names = os.listdir(file)
-            with alive_bar(len(names)) as bar:
-                for name in names:
-                    bar()
-                    image_file = os.path.join(file, name)
-                    add_watermark_service.add_mark2file(image_file, mark, out, color, size, opacity, space, angle)
-        else:
-            add_watermark_service.add_mark2file(file, mark, out, color, size, opacity, space, angle)
+        out = Path(output_path).absolute()  # 拼接输出文件和文件夹，为输出路径
+        images_list = get_files(file)
+        for image_path in simple_progress(images_list):
+            add_watermark_service.add_mark2file(image_path, mark, str(out), color, size, opacity, space, angle)
 
     def get_access_token(self, client_api, client_secret):
 
@@ -126,7 +132,8 @@ class MainImage():
                 # 获取动漫头像
                 anime = response.json()['image']
             except:
-                raise Exception('你没有开通百度AI账号，错误原因以及【免费】开通方式，见：https://mp.weixin.qq.com/s/5Eyk2j20jzSaVcr1DTsfvw')
+                raise Exception(
+                    '你没有开通百度AI账号，错误原因以及【免费】开通方式，见：https://mp.weixin.qq.com/s/5Eyk2j20jzSaVcr1DTsfvw')
             # 对返回的头像进行解码
             anime = base64.b64decode(anime)
             # 将头像写入文件当中
@@ -140,6 +147,7 @@ class MainImage():
         下载指定url的一张图片，支持所有格式:jpg\png\gif .etc
         """
         response = requests.get(url, stream=True)
+        mkdir(output_path)
         output_path_name = os.path.join(output_path, '.'.join((output_name, type)))
         with open(output_path_name, 'wb') as output_img:
             for chunk in response:
@@ -172,6 +180,7 @@ class MainImage():
         sketck = cv2.divide(gray_image, inverted_blurred_image, scale=256.0)
 
         cv2.imwrite(os.path.join(output_path, output_name), sketck)
+
     #
     # def decode_qrcode(self, qrcode_path):
     #     qrcode_content = decode(Image.open(qrcode_path))

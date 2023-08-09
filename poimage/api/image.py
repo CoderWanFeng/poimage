@@ -1,6 +1,12 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
+import os
+
+import cv2
+import numpy as np
+from PIL import Image
+
 #############################################
 # File Name: 图片.py
 # Mail: 1957875073@qq.com
@@ -9,28 +15,13 @@
 #############################################
 from poimage.core.ImageType import MainImage
 
-import cv2
-import numpy as np
-from PIL import Image
-import os
-
 mainImage = MainImage()
 
 
-# @except_dec()
-def image2gif():
-    mainImage.image2gif()
-
-
 # todo：输出文件路径
-def add_watermark(file, mark, output_path='./', out='mark_img', color="#8B8B1B", size=30, opacity=0.15, space=75,
+def add_watermark(file, mark, output_path='./mark_img', color="#8B8B1B", size=30, opacity=0.15, space=75,
                   angle=30):
-    mainImage.add_watermark(file, mark, output_path, out, color, size, opacity, space, angle)
-
-
-# todo：输入文件路径
-def img2Cartoon(path, client_api='OVALewIvPyLmiNITnceIhrYf', client_secret='rpBQH8WuXP4ldRQo5tbDkv3t0VgzwvCN'):
-    mainImage.img2Cartoon(path, client_api, client_secret)
+    mainImage.add_watermark(file, mark, output_path, color, size, opacity, space, angle)
 
 
 def down4img(url, output_path='.', output_name='down4img', type='jpg'):
@@ -42,23 +33,6 @@ def down4img(url, output_path='.', output_name='down4img', type='jpg'):
     :return:
     """
     mainImage.down4img(url, output_path, output_name, type)
-
-
-def txt2wordcloud(filename, color="white", result_file="your_wordcloud.png"):
-    mainImage.txt2wordcloud(filename, color, result_file)
-
-
-def pencil4img(input_img, output_path='./', output_name=r'pencil4img.jpg'):
-    mainImage.pencil4img(input_img, output_path, output_name)
-
-    #
-    # def decode_qrcode(qrcode_path):
-    #     """
-    #     解析二维码
-    #     :param qrcode_path: 二维码图片的路径
-    #     :return:
-    #     """
-    #     mainImage.decode_qrcode(qrcode_path)
 
 
 def del_watermark(input_image, output_image=r'./del_water_mark.jpg'):
@@ -93,3 +67,34 @@ def del_watermark(input_image, output_image=r'./del_water_mark.jpg'):
     img = Image.open(path)
     img.paste(imgSY, (int(width * 0.7), int(hight * 0.8), width, hight))
     img.save(newPath)
+
+
+def txt2wordcloud(filename, color="white", result_file="your_wordcloud.png"):
+    mainImage.txt2wordcloud(filename, color, result_file)
+
+
+def compress_image(input_file: str, output_file: str, quality: int):
+    mainImage.compress_image(input_file, output_file, quality)
+
+
+# @except_dec()
+def image2gif():
+    mainImage.image2gif()
+
+
+# todo：输入文件路径
+def img2Cartoon(path, client_api='OVALewIvPyLmiNITnceIhrYf', client_secret='rpBQH8WuXP4ldRQo5tbDkv3t0VgzwvCN'):
+    mainImage.img2Cartoon(path, client_api, client_secret)
+
+
+def pencil4img(input_img, output_path='./', output_name=r'pencil4img.jpg'):
+    mainImage.pencil4img(input_img, output_path, output_name)
+
+    #
+    # def decode_qrcode(qrcode_path):
+    #     """
+    #     解析二维码
+    #     :param qrcode_path: 二维码图片的路径
+    #     :return:
+    #     """
+    #     mainImage.decode_qrcode(qrcode_path)

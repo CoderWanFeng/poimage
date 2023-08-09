@@ -6,6 +6,7 @@ import math
 import os
 
 from PIL import Image, ImageFont, ImageDraw, ImageEnhance, ImageChops
+from pofile import mkdir
 
 TTF_FONT = os.path.dirname(__file__) + "/font/msyh.ttc"
 
@@ -81,8 +82,7 @@ def add_mark2file(imageFile, text, out, color, size, opacity, space, angle):
     try:
         im = Image.open(imageFile)
         image = im_add_mark(im, text, color, size, opacity, space, angle)
-        if not os.path.exists(out):
-            os.makedirs(out)
+        mkdir(out)
         if os.path.splitext(new_name)[1] != '.png':
             image = image.convert('RGB')
         image.save(new_name)
