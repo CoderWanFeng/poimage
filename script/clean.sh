@@ -1,3 +1,3 @@
 pip freeze > allpackages.txt
 pip uninstall -r allpackages.txt -y
-pip install --upgrade poimage
+#pip install --upgrade poimage

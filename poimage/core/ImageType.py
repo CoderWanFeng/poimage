@@ -3,13 +3,13 @@ import os
 from pathlib import Path
 
 import cv2
+import jieba
 import requests
-# from lib.image import add_watermark_service
 # 生成词云需要使用的类库
 from PIL import Image
-# from wordcloud import WordCloud
 from pofile import get_files, mkdir
 from poprogress import simple_progress
+from wordcloud import WordCloud
 
 from poimage.lib.image import add_watermark_service
 
@@ -43,26 +43,24 @@ class MainImage():
         @Desc  : 生成词云的代码，可以添加更多个性化功能
         @Return  ：
         """
-        print("txt2wordcloud，该功能已过期")
+        with open(filename, encoding='utf8') as fp:
+            text = fp.read()
+            # 将读取的中文文档进行分词
+            # 接收分词的字符串
+            word_list = jieba.cut(text)
+            # 分词后在单独个体之间加上空格
+            cloud_text = " ".join(word_list)
 
-        # with open(filename, encoding='utf8') as fp:
-        #     text = fp.read()
-        #     # 将读取的中文文档进行分词
-        #     # 接收分词的字符串
-        #     word_list = jieba.cut(text)
-        #     # 分词后在单独个体之间加上空格
-        #     cloud_text = " ".join(word_list)
-        #
-        #     # 生成wordcloud对象
-        #     wc = WordCloud(background_color=color,
-        #                    max_words=200,
-        #                    min_font_size=15,
-        #                    max_font_size=50,
-        #                    width=400,
-        #                    font_path="msyh.ttc",  # 默认的简体中文字体，没有会报错
-        #                    )
-        #     wc.generate(cloud_text)
-        #     wc.to_file(result_file)
+            # 生成wordcloud对象
+            wc = WordCloud(background_color=color,
+                           max_words=200,
+                           min_font_size=15,
+                           max_font_size=50,
+                           width=400,
+                           font_path="msyh.ttc",  # 默认的简体中文字体，没有会报错
+                           )
+            wc.generate(cloud_text)
+            wc.to_file(result_file)
 
     def add_watermark(self, file, mark, output_path, color="#8B8B1B", size=30, opacity=0.15, space=75,
                       angle=30):
