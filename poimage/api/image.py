@@ -2,10 +2,11 @@
 # -*- coding:utf-8 -*-
 
 import os
+from pathlib import Path
 
 import cv2
 import numpy as np
-from PIL import Image
+from pofile import mkdir
 
 #############################################
 # File Name: 图片.py
@@ -98,3 +99,37 @@ def pencil4img(input_img, output_path='./', output_name=r'pencil4img.jpg'):
     #     :return:
     #     """
     #     mainImage.decode_qrcode(qrcode_path)
+
+
+from PIL import Image
+import math
+
+
+def flag2profile(flag_path, profile_path, output_path):
+    """
+    1行代码，生成国旗头像
+    :param flag_path: 国旗的路径
+    :param profile_path: 原始头像的路径
+    :param output_path: 合成头像的路径
+    :return:
+    """
+    key = 3.2  # 修改key值可以调整国旗的范围，推荐2~4之间的数字，支持小数
+    motherland_flag = Image.open(flag_path)
+    head_picture = Image.open(profile_path)
+    # 截图国旗上的五颗五角星
+    flag_width, flag_height = motherland_flag.size
+    crop_flag = motherland_flag.crop((66, 0, flag_height + 66, flag_height))
+    # 将国旗截图处理成颜色渐变
+    for i in range(flag_height):
+        for j in range(flag_height):
+            color = crop_flag.getpixel((i, j))
+            distance = int(math.sqrt(i * i + j * j))
+            alpha = 255 - int(distance // key)
+            new_color = (*color[0:-1], alpha if alpha > 0 else 0)
+            crop_flag.putpixel((i, j), new_color)
+    # 修改渐变图片的尺寸，适应头像大小，粘贴到头像上
+    new_crop_flag = crop_flag.resize(head_picture.size)
+    head_picture.paste(new_crop_flag, (0, 0), new_crop_flag)
+    # 保存自己的国旗头像
+    mkdir(Path(output_path).absolute().parent)
+    head_picture.save(output_path)
