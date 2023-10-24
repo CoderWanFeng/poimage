@@ -179,7 +179,31 @@ class MainImage():
 
         cv2.imwrite(os.path.join(output_path, output_name), sketck)
 
-    #
+    def split4img(self, img_path: str, output_path: str = r'./', num: int = 9):
+        image = Image.open(img_path)
+
+        width, height = image.size
+        new_image_length = width if width > height else height
+        new_image = Image.new(image.mode, (new_image_length, new_image_length), color='white')
+        if width > height:
+            new_image.paste(image, (0, int((new_image_length - height) / 2)))
+        else:
+            new_image.paste(image, (int((new_image_length - width) / 2), 0))
+        # 切割图片
+        width, _ = new_image.size
+        item_width = int(width / 3)
+        box_list = []
+        for i in range(0, 3):
+            for j in range(0, 3):
+                # print((i * item_width, j * item_width, (i + 1) * item_width, (j + 1) * item_width))
+                box = ((j * item_width, i * item_width, (j + 1) * item_width, (i + 1) * item_width))
+                box_list.append(box)
+        image_list = [image.crop(box) for box in box_list]
+        # 保存图片
+        abs_output_path = Path(output_path).absolute()
+        for index, img in enumerate(image_list):
+            img.save(os.path.join(str(abs_output_path), str(index + 1) + '.png'), 'PNG')
+        abs_output_path
     # def decode_qrcode(self, qrcode_path):
     #     qrcode_content = decode(Image.open(qrcode_path))
     #     qrcode_url = qrcode_content[0][0].decode()

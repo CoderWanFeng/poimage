@@ -105,7 +105,7 @@ from PIL import Image
 import math
 
 
-def flag2profile( profile_path, output_path,flag_path=None):
+def flag2profile(profile_path, output_path, flag_path=None):
     """
     1行代码，生成国旗头像
     :param flag_path: 国旗的路径
@@ -114,10 +114,10 @@ def flag2profile( profile_path, output_path,flag_path=None):
     :return:
     """
     key = 3.2  # 修改key值可以调整国旗的范围，推荐2~4之间的数字，支持小数
-    if flag_path==None:
+    if flag_path == None:
         root_path = Path(__file__).parent.parent
         src_path = root_path / 'src/imgs'
-        flag_path=src_path / '1024.png'
+        flag_path = src_path / '1024.png'
     motherland_flag = Image.open(flag_path)
     head_picture = Image.open(profile_path)
     # 截图国旗上的五颗五角星
@@ -137,3 +137,13 @@ def flag2profile( profile_path, output_path,flag_path=None):
     # 保存自己的国旗头像
     mkdir(Path(output_path).absolute().parent)
     head_picture.save(output_path)
+
+
+def split4img(img_path, output_path: str = r'./', num=9):
+    """
+    切割图片
+    :param img_path:
+    :param num:
+    :return:
+    """
+    mainImage.split4img(img_path, output_path, num)
