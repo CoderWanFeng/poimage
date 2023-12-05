@@ -20,7 +20,7 @@ mainImage = MainImage()
 
 
 # todo：输出文件路径
-def add_watermark(file, mark, output_path='./mark_img', color="#8B8B1B", size=50, opacity=0.02, space=200,
+def add_watermark(file, mark, output_path='./mark_img', color="#eaeaea", size=30, opacity=0.35, space=200,
                   angle=30):
     mainImage.add_watermark(file, mark, output_path, color, size, opacity, space, angle)
 

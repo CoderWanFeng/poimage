@@ -62,7 +62,7 @@ class MainImage():
             wc.generate(cloud_text)
             wc.to_file(result_file)
 
-    def add_watermark(self, file, mark, output_path, color="#8B8B1B", size=30, opacity=0.15, space=75,
+    def add_watermark(self, file, mark, output_path, color="#eaeaea", size=30, opacity=0.35, space=75,
                       angle=30):
         """
         @Author & Date  : demo 2022/5/6 14:33
