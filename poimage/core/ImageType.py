@@ -1,5 +1,7 @@
 import base64
+import multiprocessing
 import os
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 import cv2
@@ -65,14 +67,22 @@ class MainImage():
     def add_watermark(self, file, mark, output_path, color="#eaeaea", size=30, opacity=0.35, space=75,
                       angle=30):
         """
-        @Author & Date  : demo 2022/5/6 14:33
+        @Author & Date  : 2022/5/6 14:33
         @Desc  : 给图片添加水印
         @Return  ： 添加了水印的图片，输出到out指定的文件夹
         """
         out = Path(output_path).absolute()  # 拼接输出文件和文件夹，为输出路径
         images_list = get_files(file)
-        for image_path in simple_progress(images_list):
-            add_watermark_service.add_mark2file(image_path, mark, str(out), color, size, opacity, space, angle)
+        # for image_path in simple_progress(images_list):
+        #     add_watermark_service.add_mark2file(image_path, mark, str(out), color, size, opacity, space, angle)
+        processes = multiprocessing.cpu_count()
+        # 创建线程池
+        with ThreadPoolExecutor(max_workers=2 * processes + 1) as executor:#计算多线程数量：https://blog.51cto.com/u_15072927/4642272
+            # 向线程池添加任务
+            for i in range(len(images_list)):
+                params = (images_list[i], mark, str(out), color, size, opacity, space, angle)
+                executor.submit(lambda cxp: add_watermark_service.add_mark2file(*cxp),
+                                params)  # 线程池传参：https://www.jb51.net/article/277904.htm
 
     def get_access_token(self, client_api, client_secret):
 
