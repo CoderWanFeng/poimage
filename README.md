@@ -2,7 +2,7 @@
 	👉 <a target="_blank" href="https://www.python-office.com/">项目官网：https://www.python-office.com/</a> 👈
 </p>
 <p align="center">
-	👉 <a target="_blank" href="https://python-office-1300615378.cos.ap-chongqing.myqcloud.com/python-office.jpg">本开源项目的交流群</a> 👈
+	👉 <a target="_blank" href="http://www.python4office.cn/wechat-group/">本开源项目的交流群</a> 👈
 </p>
 
 
@@ -86,8 +86,8 @@ o基础的朋友，想快速入门自动化办公，可以学习下面这2套原
 ## 📌联系作者
 
 <p align="center" id='开源交流群-banner'>
-<a target="_blank" href='https://python-office-1300615378.cos.ap-chongqing.myqcloud.com/python-office.jpg'>
-<img src="https://python-office-1300615378.cos.ap-chongqing.myqcloud.com/python-office-qr.jpg" width="100%"/>
+<a target="_blank" href='https://cos.python-office.com/group%2Ffree-group.jpg'>
+<img src="https://cos.python-office.com/group/python-office-qr.jpg" width="100%"/>
 </a> 
 </p>
 
@@ -97,6 +97,6 @@ o基础的朋友，想快速入门自动化办公，可以学习下面这2套原
 
 <p align="center" id='福利合集-banner'>
     <a target="_blank" href='http://python4office.cn/sideline-pro-list/'>
-    <img src="https://python-office-1300615378.cos.ap-chongqing.myqcloud.com/fuli.jpg" width="100%"/>
+    <img src="https://cos.python-office.com/ads/fuli/all-1.jpg" width="100%"/>
     </a>   
 </p>

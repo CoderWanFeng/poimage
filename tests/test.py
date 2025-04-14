@@ -11,7 +11,7 @@ class TestImage(unittest.TestCase):
         add_watermark(file='group.jpg', mark='python-office', output_path=r'./output_path')
 
     def test_down4img(self):
-        down4img(url='https://python-office-1300615378.cos.ap-chongqing.myqcloud.com/python-office-qr.jpg',
+        down4img(url='https://cos.python-office.com/group/python-office-qr.jpg',
                  output_path=r'./')
 
     # def test_img2Cartoon(self):
