@@ -45,21 +45,37 @@ pip install -i https://mirrors.aliyun.com/pypi/simple/ poimage -U
 
 本项目欢迎任何人参与开发，如果是小白，可以看一下开发教程👉[如何参与开源项目？0基础入门：怎么打开GitHub？什么是issue？什么是PR？](https://www.bilibili.com/video/BV1EP411d7Np/?spm_id_from=333.999.0.0)
 
+
+#### 目录结构和pr要求如下：
+
+- docs：存放该项目的文档，包括教程、案例等。
+- examples：存放该项目的案例，**如果你有新增功能或者接口，请在这里新建一个py文件，并在这里写一个使用案例。**
+- poimage：存放该项目的源代码，其中：
+    - api：提供外部调用的接口。
+    - core：存放该项目的核心代码，包括类、函数等。
+    - lib：存放工具类、工具函数等。
+- tests：存放该项目的单元测试的代码，其中：
+    - test_code：存放测试代码，**每新增/修改任一个函数，提交之前必须写单元测试**！
+    - test_files：存放测试文件，包括图片、Excel等。
+- README.md、requirement.txt、setup等文件，一般不修改。
+
+
 ### 🐞提供bug反馈或建议
 
 提交问题反馈时，请务必填写和该项目本身有关的问题，不进行有关python学习，甚至是个人练习的知识答疑和讨论。
 
 - [Github issue](https://github.com/CoderWanFeng/poimage/issues)
 - [gitee issue](https://gitee.com/CoderWanFeng/poimage/issues)
+- [GitCode issue](https://gitcode.com/python4office/poimage/issues)
+
 ### 🧬贡献代码的步骤
 
-1. 在Gitee或者Github上fork项目到自己的repo
+1. 在Gitee/Github/GitCode上fork项目到自己的repo
 2. 把fork过去的项目也就是你的项目clone到你的本地
 3. 修改代码
 4. commit后push到自己的库
-5. 登录Gitee或Github在你首页可以看到一个 pull request 按钮，点击它，填写一些说明信息，然后提交到master分支即可。
+5. 登录Gitee/Github/GitCode在你首页可以看到一个 pull request 按钮，点击它，填写一些说明信息，然后提交到master/main分支即可。
 6. 等待程序员晚枫合并，＋微信说一声更好👉[CoderWanFeng](http://python4office.cn/wechat-qrcode/)
-
 
 -------------------------------------------------------------------------------
 
