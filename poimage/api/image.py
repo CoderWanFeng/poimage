@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding:utf-8 -*-
 import os
 from pathlib import Path
@@ -7,13 +6,9 @@ import cv2
 import numpy as np
 from pofile import mkdir
 
-#############################################
-# File Name: 图片.py
-# Mail: 1957875073@qq.com
-# Created Time:  2022-4-25 10:17:34
-# Description: 有关 图片 的自动化操作
-#############################################
 from poimage.core.ImageType import MainImage
+from PIL import Image
+import math
 
 mainImage = MainImage()
 
@@ -83,25 +78,12 @@ def image2gif():
 
 
 # todo：输入文件路径
-def img2Cartoon(path, client_api='OVALewIvPyLmiNITnceIhrYf', client_secret='rpBQH8WuXP4ldRQo5tbDkv3t0VgzwvCN'):
+def img2Cartoon(path, client_api='', client_secret=''):
     mainImage.img2Cartoon(path, client_api, client_secret)
 
 
 def pencil4img(input_img, output_path='./', output_name=r'pencil4img.jpg'):
     mainImage.pencil4img(input_img, output_path, output_name)
-
-    #
-    # def decode_qrcode(qrcode_path):
-    #     """
-    #     解析二维码
-    #     :param qrcode_path: 二维码图片的路径
-    #     :return:
-    #     """
-    #     mainImage.decode_qrcode(qrcode_path)
-
-
-from PIL import Image
-import math
 
 
 def flag2profile(profile_path, output_path, flag_path=None):
