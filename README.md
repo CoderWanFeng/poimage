@@ -2,7 +2,7 @@
 	👉 <a target="_blank" href="https://www.python-office.com/">项目官网：https://www.python-office.com/</a> 👈
 </p>
 <p align="center">
-	👉 <a target="_blank" href="http://www.python4office.cn/wechat-group/">本开源项目的交流群</a> 👈
+	👉 <a target="_blank" href="https://www.python4office.cn/wechat-group/">本开源项目的交流群</a> 👈
 </p>
 
 
@@ -66,16 +66,16 @@ pip install -i https://mirrors.aliyun.com/pypi/simple/ poimage -U
 
 - [Github issue](https://github.com/CoderWanFeng/poimage/issues)
 - [gitee issue](https://gitee.com/CoderWanFeng/poimage/issues)
-- [GitCode issue](https://gitcode.com/python4office/poimage/issues)
+- [atomgit issue](https://atomgit.com/python4office/poimage/issues)
 
 ### 🧬贡献代码的步骤
 
-1. 在Gitee/Github/GitCode上fork项目到自己的repo
+1. 在Gitee/Github/atomgit上fork项目到自己的repo
 2. 把fork过去的项目也就是你的项目clone到你的本地
 3. 修改代码
 4. commit后push到自己的库
-5. 登录Gitee/Github/GitCode在你首页可以看到一个 pull request 按钮，点击它，填写一些说明信息，然后提交到master/main分支即可。
-6. 等待程序员晚枫合并，＋微信说一声更好👉[CoderWanFeng](http://python4office.cn/wechat-qrcode/)
+5. 登录Gitee/Github/atomgit在你首页可以看到一个 pull request 按钮，点击它，填写一些说明信息，然后提交到master/main分支即可。
+6. 等待程序员晚枫合并，＋微信说一声更好👉[python-office](https://www.python4office.cn/wechat-qrcode/)
 
 -------------------------------------------------------------------------------
 
@@ -90,7 +90,7 @@ o基础的朋友，想快速入门自动化办公，可以学习下面这2套原
 </p>
 
 <p align="center" id='10讲机器人-banner'>
-    <a target="_blank" href='https://www.python-office.com/course-002/10-PyOfficeRobot/10-PyOfficeRobot.html'>
+    <a target="_blank" href='https://mp.weixin.qq.com/s/j8C-AsOGGM43vA0hXoCawg'>
     <img src="https://website-python-1300615378.cos.ap-nanjing.myqcloud.com/course/10%E8%AE%B2%E6%9C%BA%E5%99%A8%E4%BA%BA-%E6%A8%AA.jpg" width="100%"/>
     </a>   
 </p>
@@ -111,7 +111,7 @@ o基础的朋友，想快速入门自动化办公，可以学习下面这2套原
 几个没有套路的福利，每天都可以领一次~
 
 <p align="center" id='福利合集-banner'>
-    <a target="_blank" href='http://python4office.cn/sideline-pro-list/'>
+    <a target="_blank" href='https://www.python4office.cn/sideline-pro-list/'>
     <img src="https://cos.python-office.com/ads/fuli/all-1.jpg" width="100%"/>
     </a>   
 </p>
