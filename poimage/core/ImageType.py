@@ -20,14 +20,26 @@ from poimage.lib.image import add_watermark_service
 
 
 class MainImage():
-    def compress_image(self, input_file, output_file, quality):
+    def compress_image(self, input_file, output_file, quality=None, target_size_mb=None, min_quality=10, max_quality=95):
         """
-        压缩图片
+        压缩图片（支持按质量或按大小压缩）
+            
         :param input_file: 输入图片
         :param output_file: 输出图片
-        :param quality: 质量，1-100之间，数值越低压缩率越高
-        :return:
+        :param quality: 质量参数，1-100 之间，数值越低压缩率越高（按质量压缩时使用）
+        :param target_size_mb: 目标文件大小，单位 MB（按大小压缩时使用）
+        :param min_quality: 最低质量参数，默认 10（仅在按大小压缩时使用）
+        :param max_quality: 最高质量参数，默认 95（仅在按大小压缩时使用）
+        :return: 如果按大小压缩，返回包含压缩结果的字典；否则返回 None
         """
+        # 如果指定了目标大小，使用智能压缩算法
+        if target_size_mb is not None:
+            return self.compress_to_size(input_file, output_file, target_size_mb, min_quality, max_quality)
+            
+        # 否则使用传统的质量压缩
+        if quality is None:
+            raise ValueError("必须指定 quality 或 target_size_mb 参数")
+            
         img = Image.open(input_file)
         img.save(output_file, quality=quality)
 
@@ -220,26 +232,26 @@ class MainImage():
     #     print(qrcode_url)
     #     return qrcode_url
 
-    def compress_to_size(self, input_file, output_file, target_size_kb, min_quality=10, max_quality=95):
+    def compress_to_size(self, input_file, output_file, target_size_mb, min_quality=10, max_quality=95):
         """
-        将图片压缩至指定目标大小（KB）
-        
+        将图片压缩至指定目标大小（MB）
+                
         参数:
             input_file (str): 输入图片文件路径
             output_file (str): 输出图片文件路径
-            target_size_kb (int): 目标大小，单位KB
-            min_quality (int): 最低质量参数，默认10
-            max_quality (int): 最高质量参数，默认95
-            
+            target_size_mb (float): 目标大小，单位 MB
+            min_quality (int): 最低质量参数，默认 10
+            max_quality (int): 最高质量参数，默认 95
+                    
         返回:
             dict: 包含压缩结果的字典
                 - success (bool): 是否成功
-                - original_size (float): 原始大小（KB）
-                - compressed_size (float): 压缩后大小（KB）
+                - original_size (float): 原始大小（MB）
+                - compressed_size (float): 压缩后大小（MB）
                 - quality (int): 使用的质量参数
                 - compression_ratio (float): 压缩比例
                 - message (str): 结果消息
-                
+                        
         异常:
             ValueError: 当输入参数无效时
             IOError: 当文件读写失败时
@@ -259,8 +271,8 @@ class MainImage():
             if not os.path.exists(input_file):
                 raise ValueError(f"输入文件不存在: {input_file}")
                 
-            if target_size_kb <= 0:
-                raise ValueError(f"目标大小必须大于0，当前值: {target_size_kb}")
+            if target_size_mb <= 0:
+                raise ValueError(f"目标大小必须大于 0，当前值：{target_size_mb}")
                 
             if min_quality < 1 or min_quality > 100:
                 raise ValueError(f"最低质量参数必须在1-100之间，当前值: {min_quality}")
@@ -273,32 +285,32 @@ class MainImage():
             
             # 获取原始文件大小
             original_size_bytes = os.path.getsize(input_file)
-            original_size_kb = original_size_bytes / 1024
-            result['original_size'] = round(original_size_kb, 2)
-            
+            original_size_mb = original_size_bytes / (1024 * 1024)
+            result['original_size'] = round(original_size_mb, 2)
+                        
             # 如果原始文件已经小于目标大小，直接复制
-            if original_size_kb <= target_size_kb:
+            if original_size_mb <= target_size_mb:
                 import shutil
                 shutil.copy2(input_file, output_file)
                 result['success'] = True
-                result['compressed_size'] = original_size_kb
+                result['compressed_size'] = original_size_mb
                 result['quality'] = max_quality
                 result['compression_ratio'] = 1.0
-                result['message'] = f"原始文件大小({original_size_kb:.2f}KB)已小于目标大小({target_size_kb}KB)，无需压缩"
+                result['message'] = f"原始文件大小 ({original_size_mb:.2f}MB) 已小于目标大小 ({target_size_mb}MB)，无需压缩"
                 return result
-            
+                        
             # 打开图片
             img = Image.open(input_file)
-            
+                        
             # 确定图片格式
             img_format = img.format if img.format else 'JPEG'
-            
-            # 转换为RGB模式（如果是RGBA且要保存为JPEG）
+                        
+            # 转换为 RGB 模式（如果是 RGBA 且要保存为 JPEG）
             if img.mode == 'RGBA' and img_format == 'JPEG':
                 img = img.convert('RGB')
-            
+                        
             # 自适应压缩算法：二分查找最优质量参数
-            target_size_bytes = target_size_kb * 1024
+            target_size_bytes = target_size_mb * 1024 * 1024
             low, high = min_quality, max_quality
             best_quality = min_quality
             best_size = float('inf')
@@ -359,16 +371,16 @@ class MainImage():
                 f.write(best_img.getvalue())
             
             # 计算结果
-            compressed_size_kb = best_size / 1024
+            compressed_size_mb = best_size / (1024 * 1024)
             result['success'] = True
-            result['compressed_size'] = round(compressed_size_kb, 2)
+            result['compressed_size'] = round(compressed_size_mb, 2)
             result['quality'] = best_quality
-            result['compression_ratio'] = round(original_size_kb / compressed_size_kb, 2)
+            result['compression_ratio'] = round(original_size_mb / compressed_size_mb, 2)
             
-            if compressed_size_kb <= target_size_kb:
-                result['message'] = f"成功压缩至{compressed_size_kb:.2f}KB（目标：{target_size_kb}KB），质量参数：{best_quality}"
+            if compressed_size_mb <= target_size_mb:
+                result['message'] = f"成功压缩至{compressed_size_mb:.2f}MB（目标：{target_size_mb}MB），质量参数：{best_quality}"
             else:
-                result['message'] = f"压缩至{compressed_size_kb:.2f}KB（目标：{target_size_kb}KB），已达到最低质量限制{min_quality}"
+                result['message'] = f"压缩至{compressed_size_mb:.2f}MB（目标：{target_size_mb}MB），已达到最低质量限制{min_quality}"
             
             return result
             

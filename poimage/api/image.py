@@ -68,8 +68,33 @@ def txt2wordcloud(filename, color="white", result_file="your_wordcloud.png"):
     mainImage.txt2wordcloud(filename, color, result_file)
 
 
-def compress_image(input_file: str, output_file: str, quality: int):
-    mainImage.compress_image(input_file, output_file, quality)
+def compress_image(input_file: str, output_file: str, quality: int = None, target_size_mb: float = None, min_quality: int = 10, max_quality: int = 95):
+    """
+    压缩图片（支持按质量或按大小压缩）
+    
+    参数:
+        input_file (str): 输入图片文件路径
+        output_file (str): 输出图片文件路径
+        quality (int, optional): 质量参数，1-100 之间，数值越低压缩率越高
+        target_size_mb (float, optional): 目标文件大小，单位 MB
+        min_quality (int, optional): 最低质量参数，默认 10（仅在按大小压缩时使用）
+        max_quality (int, optional): 最高质量参数，默认 95（仅在按大小压缩时使用）
+        
+    返回:
+        dict or None: 如果按大小压缩，返回包含压缩结果的字典；否则返回 None
+        
+    使用示例:
+        # 按质量压缩
+        >>> compress_image('photo.jpg', 'output.jpg', quality=50)
+        
+        # 按大小压缩
+        >>> result = compress_image('photo.jpg', 'output.jpg', target_size_mb=0.5)
+        >>> print(result['message'])
+        
+        # 按大小压缩，自定义质量范围
+        >>> result = compress_image('photo.jpg', 'output.jpg', target_size_mb=1, min_quality=20, max_quality=90)
+    """
+    return mainImage.compress_image(input_file, output_file, quality, target_size_mb, min_quality, max_quality)
 
 
 # @except_dec()
@@ -129,42 +154,3 @@ def split4img(img_path, output_path: str = r'./', num=9):
     """
     mainImage.split4img(img_path, output_path, num)
 
-
-def compress_to_size(input_file: str, output_file: str, target_size_kb: int, min_quality: int = 10, max_quality: int = 95):
-    """
-    将图片压缩至指定目标大小（KB）
-    
-    参数:
-        input_file (str): 输入图片文件路径，支持常见格式如JPEG、PNG等
-        output_file (str): 输出图片文件路径
-        target_size_kb (int): 目标大小，单位KB，必须大于0
-        min_quality (int): 最低质量参数，范围1-100，默认10
-        max_quality (int): 最高质量参数，范围1-100，默认95
-        
-    返回:
-        dict: 包含压缩结果的字典
-            - success (bool): 是否成功压缩
-            - original_size (float): 原始大小（KB）
-            - compressed_size (float): 压缩后大小（KB）
-            - quality (int): 使用的质量参数
-            - compression_ratio (float): 压缩比例（原始大小/压缩后大小）
-            - message (str): 结果消息
-            
-    使用示例:
-        >>> from poimage.api import image
-        >>> result = image.compress_to_size('large_photo.jpg', 'small_photo.jpg', 100)
-        >>> print(result['message'])
-        >>> print(f"压缩比例: {result['compression_ratio']}")
-        
-    功能说明:
-        - 使用自适应压缩算法，通过二分查找最优质量参数
-        - 自动处理不同图片格式（JPEG、PNG等）
-        - 如果原始文件已小于目标大小，直接复制无需压缩
-        - 当无法达到目标大小时，使用最低质量参数并返回警告信息
-        
-    注意事项:
-        - 目标大小设置过小可能导致图片质量严重下降
-        - PNG格式的压缩效果可能不如JPEG明显
-        - 压缩过程在内存中完成，避免频繁磁盘IO
-    """
-    return mainImage.compress_to_size(input_file, output_file, target_size_kb, min_quality, max_quality)
