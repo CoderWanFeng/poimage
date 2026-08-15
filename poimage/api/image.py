@@ -73,7 +73,31 @@ def txt2wordcloud(filename, color="white", result_file="your_wordcloud.png"):
     mainImage.txt2wordcloud(filename, color, result_file)
 
 
-def compress_image(input_file: str, output_file: str, quality: int):
+def compress_image(input_file: str, output_file: str, quality: int) -> None:
+    """Compress an image or losslessly optimize animated GIF image data.
+
+    压缩普通图片；动态 GIF 输出为 GIF 时可无损优化图像数据。
+
+    Animated GIF image data may be repacketized, LZW-recoded, conservatively
+    cropped to changed frame rectangles, or remapped to a smaller exact color
+    table. Structural rewrites are accepted only when independent composition
+    preserves every displayed frame and the result is strictly smaller. Original
+    bytes are copied when no verified candidate exists. The quality parameter is
+    ignored for animated GIF requests.
+
+    动态 GIF 的图像数据可能被重新分包、LZW 重编码、保守裁剪为变化帧矩形，或精确
+    重映射到更小的调色板；只有独立合成验证确认每个展示帧不变且结果严格更小时才
+    采用结构重写。没有验证通过的候选时复制原字节。动态 GIF 路径忽略 quality 参数。
+
+    Args:
+        input_file (str): Input image path / 输入图片路径。
+        output_file (str): Output image path / 输出图片路径。
+        quality (int): Raster image quality; ignored for animated GIF
+            optimization / 普通图片质量；动态 GIF 优化路径忽略该参数。
+
+    Returns:
+        None
+    """
     mainImage.compress_image(input_file, output_file, quality)
 
 

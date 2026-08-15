@@ -14,6 +14,7 @@ from poprogress import simple_progress
 from wordcloud import WordCloud
 
 from poimage.lib.image import add_watermark_service
+from poimage.lib.image.image_compression_router import _ImageCompressionRouter
 
 
 # from pyzbar.pyzbar import decode  # 解析二维码用
@@ -21,15 +22,12 @@ from poimage.lib.image import add_watermark_service
 
 class MainImage():
     def compress_image(self, input_file, output_file, quality):
-        """
-        压缩图片
-        :param input_file: 输入图片
-        :param output_file: 输出图片
-        :param quality: 质量，1-100之间，数值越低压缩率越高
-        :return:
-        """
-        img = Image.open(input_file)
-        img.save(output_file, quality=quality)
+        """Compress a raster image or optimize animated GIF image data."""
+        _ImageCompressionRouter.process(
+            input_file,
+            output_file,
+            quality,
+        )
 
     # TODO:自动生成gif
     def image2gif(self):
