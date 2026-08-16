@@ -14,6 +14,7 @@ from poprogress import simple_progress
 from wordcloud import WordCloud
 
 from poimage.lib.image import add_watermark_service
+from poimage.lib.image.png_compression import _try_compress_png
 
 
 # from pyzbar.pyzbar import decode  # 解析二维码用
@@ -25,9 +26,11 @@ class MainImage():
         压缩图片
         :param input_file: 输入图片
         :param output_file: 输出图片
-        :param quality: 质量，1-100之间，数值越低压缩率越高
+        :param quality: 质量，1-100之间；PNG 无损压缩路径忽略该参数
         :return:
         """
+        if _try_compress_png(input_file, output_file):
+            return None
         img = Image.open(input_file)
         img.save(output_file, quality=quality)
 
